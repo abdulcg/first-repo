@@ -3,57 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project RevoU</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Interactive Cat 🐱</title>
 
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom animations & cat styles -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <header class="site-header">
-    <h1 class="site-title">Learn Web Design</h1>
-    <p class="site-description">A simple page structure to style with CSS.</p>
-  </header>
+<body class="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 flex flex-col items-center justify-center select-none">
 
-  <nav class="site-nav">
-    <ul class="nav-list">
-      <li class="nav-item"><a href="#overview">Overview</a></li>
-      <li class="nav-item"><a href="#topics">Topics</a></li>
-      <li class="nav-item"><a href="#practice">Practice</a></li>
-    </ul>
-  </nav>
+  <!-- Title -->
+  <h1 class="text-4xl font-bold text-orange-700 mb-2 tracking-tight">Meet Whiskers 🐾</h1>
+  <p class="text-orange-500 mb-8 text-lg">Click, hover, or pet the cat to see reactions!</p>
 
-  <main class="content">
-    <section id="overview" class="section">
-      <h2>Overview</h2>
-      <p>This page shows a basic layout with header, navigation, content, and footer.</p>
-    </section>
+  <!-- Cat Card -->
+  <div class="bg-white rounded-3xl shadow-2xl p-10 flex flex-col items-center gap-6 w-80">
 
-    <section id="topics" class="section">
-      <h2>Topics to Learn</h2>
-      <ul class="topic-list">
-        <li>HTML structure</li>
-        <li>CSS styling</li>
-        <li>Responsive design</li>
-      </ul>
-    </section>
+    <!-- Speech Bubble -->
+    <div id="bubble"
+      class="relative bg-orange-100 border-2 border-orange-300 rounded-2xl px-5 py-3 text-center text-orange-800 font-semibold text-base min-h-[48px] w-full transition-all duration-300">
+      <span id="bubble-text">...meow?</span>
+      <!-- Bubble tail -->
+      <div class="absolute left-1/2 -translate-x-1/2 -bottom-3 w-0 h-0
+        border-l-8 border-r-8 border-t-8
+        border-l-transparent border-r-transparent border-t-orange-300"></div>
+    </div>
 
-    <section id="practice" class="section">
-      <h2>Practice Area</h2>
-      <article class="card">
-        <h3>Try this</h3>
-        <p>Create a new CSS file and style the elements using the class names above.</p>
-      </article>
-    </section>
-  </main>
+    <!-- Cat SVG -->
+    <div id="cat-container" class="cursor-pointer relative" title="Click me!">
+      <svg id="cat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"
+        class="cat-svg w-48 h-48 transition-transform duration-200 drop-shadow-lg"
+        aria-label="An interactive cartoon cat">
 
-  <aside class="sidebar">
-    <h2>Tip</h2>
-    <p>You can add colors, spacing, and fonts in CSS to make this page look nicer.</p>
-  </aside>
+        <!-- Body -->
+        <ellipse cx="100" cy="160" rx="55" ry="45" fill="#F4A460"/>
 
-  <footer class="site-footer">
-    <p>Built for learning HTML structure.</p>
-  </footer>
+        <!-- Head -->
+        <circle cx="100" cy="90" r="48" fill="#F4A460"/>
 
-  
+        <!-- Ears -->
+        <polygon points="60,52 50,18 82,45" fill="#F4A460"/>
+        <polygon points="140,52 150,18 118,45" fill="#F4A460"/>
+        <!-- Inner ears -->
+        <polygon points="63,50 55,26 79,46" fill="#FFB6C1"/>
+        <polygon points="137,50 145,26 121,46" fill="#FFB6C1"/>
+
+        <!-- Face: eyes -->
+        <g id="eyes">
+          <ellipse id="eye-left" cx="82" cy="88" rx="10" ry="11" fill="white"/>
+          <ellipse id="pupil-left" cx="82" cy="90" rx="6" ry="7" fill="#333"/>
+          <circle cx="85" cy="87" r="2" fill="white"/>
+
+          <ellipse id="eye-right" cx="118" cy="88" rx="10" ry="11" fill="white"/>
+          <ellipse id="pupil-right" cx="118" cy="90" rx="6" ry="7" fill="#333"/>
+          <circle cx="121" cy="87" r="2" fill="white"/>
+        </g>
+
+        <!-- Happy eyes (hidden by default) -->
+        <g id="happy-eyes" style="display:none">
+          <path d="M72 86 Q82 78 92 86" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M108 86 Q118 78 128 86" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Sleepy eyes (hidden by default) -->
+        <g id="sleepy-eyes" style="display:none">
+          <path d="M72 90 Q82 86 92 90" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M108 90 Q118 86 128 90" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Surprised eyes (hidden by default) -->
+        <g id="surprised-eyes" style="display:none">
+          <ellipse cx="82" cy="88" rx="13" ry="14" fill="white"/>
+          <ellipse cx="82" cy="90" rx="9" ry="10" fill="#333"/>
+          <circle cx="86" cy="86" r="3" fill="white"/>
+          <ellipse cx="118" cy="88" rx="13" ry="14" fill="white"/>
+          <ellipse cx="118" cy="90" rx="9" ry="10" fill="#333"/>
+          <circle cx="122" cy="86" r="3" fill="white"/>
+        </g>
+
+        <!-- Nose -->
+        <polygon id="nose" points="100,103 96,110 104,110" fill="#FF69B4"/>
+
+        <!-- Mouth -->
+        <path id="mouth" d="M96,110 Q100,116 104,110" stroke="#333" stroke-width="2" fill="none"/>
+
+        <!-- Happy mouth (hidden) -->
+        <path id="happy-mouth" d="M90,112 Q100,122 110,112" stroke="#333" stroke-width="2" fill="none" style="display:none"/>
+
+        <!-- Whiskers left -->
+        <g id="whiskers" stroke="#999" stroke-width="1.5">
+          <line x1="58" y1="108" x2="90" y2="112"/>
+          <line x1="55" y1="115" x2="90" y2="115"/>
+          <line x1="58" y1="122" x2="90" y2="118"/>
+          <!-- right -->
+          <line x1="142" y1="108" x2="110" y2="112"/>
+          <line x1="145" y1="115" x2="110" y2="115"/>
+          <line x1="142" y1="122" x2="110" y2="118"/>
+        </g>
+
+        <!-- Tail -->
+        <path id="tail" d="M148,190 Q185,160 170,130 Q160,115 150,130"
+          stroke="#F4A460" stroke-width="14" fill="none" stroke-linecap="round"/>
+
+        <!-- Paws -->
+        <ellipse cx="72" cy="198" rx="18" ry="11" fill="#F4A460"/>
+        <ellipse cx="128" cy="198" rx="18" ry="11" fill="#F4A460"/>
+
+        <!-- Paw toes left -->
+        <ellipse cx="60" cy="197" rx="5" ry="4" fill="#e8956a"/>
+        <ellipse cx="72" cy="205" rx="5" ry="4" fill="#e8956a"/>
+        <ellipse cx="84" cy="197" rx="5" ry="4" fill="#e8956a"/>
+
+        <!-- Paw toes right -->
+        <ellipse cx="116" cy="197" rx="5" ry="4" fill="#e8956a"/>
+        <ellipse cx="128" cy="205" rx="5" ry="4" fill="#e8956a"/>
+        <ellipse cx="140" cy="197" rx="5" ry="4" fill="#e8956a"/>
+
+        <!-- Forehead stripe -->
+        <path d="M95,45 Q100,55 105,45" stroke="#e8956a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+
+      <!-- Floating hearts (shown on pet) -->
+      <div id="hearts" class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-visible"></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 justify-center w-full">
+      <button onclick="catReaction('pet')"
+        class="btn bg-pink-400 hover:bg-pink-500 text-white px-4 py-2 rounded-xl font-semibold shadow transition-all active:scale-95">
+        🤚 Pet
+      </button>
+      <button onclick="catReaction('feed')"
+        class="btn bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-xl font-semibold shadow transition-all active:scale-95">
+        🐟 Feed
+      </button>
+      <button onclick="catReaction('scare')"
+        class="btn bg-purple-400 hover:bg-purple-500 text-white px-4 py-2 rounded-xl font-semibold shadow transition-all active:scale-95">
+        👻 Scare
+      </button>
+      <button onclick="catReaction('sleep')"
+        class="btn bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-semibold shadow transition-all active:scale-95">
+        😴 Sleep
+      </button>
+      <button onclick="catReaction('play')"
+        class="btn bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-xl font-semibold shadow transition-all active:scale-95">
+        🧶 Play
+      </button>
+    </div>
+  </div>
+
+  <!-- Mood indicator -->
+  <div class="mt-6 flex gap-3 items-center">
+    <span class="text-orange-600 font-medium">Mood:</span>
+    <span id="mood-badge"
+      class="px-4 py-1 rounded-full text-sm font-bold bg-orange-200 text-orange-700 transition-all duration-500">
+      Curious 🐱
+    </span>
+  </div>
+
+  <p class="mt-4 text-orange-400 text-sm">You can also hover or click directly on the cat!</p>
+
+  <script src="script.js"></script>
 </body>
 </html>
